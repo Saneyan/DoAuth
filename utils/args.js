@@ -6,7 +6,11 @@ var _ = require('underscore');
 var validOptions = {
   type:   ['wireless', 'dormitory'],
   debug:  ['true', 'false'],
-  config: ['*<|mat>'],
+  auto:  ['true', 'false'],
+  config: '*',
+  repeat: '*',
+  test_repeat: '*',
+  test_host: '*'
 };
 
 var requirements = ['type']; 
@@ -48,10 +52,15 @@ function isValid(arg) {
   
   if (validOptions.hasOwnProperty(arg.key)) {
     values = validOptions[arg.key];
-    values.forEach(function (value) {
-      if (value === arg.value || value === '*<|mat>')
-        valid = true;
-    });
+
+    if (values === '*') {
+      valid = true;
+    } else {
+      values.forEach(function (value) {
+        if (value === arg.value)
+          valid = true;
+      });
+    }
   }
 
   return valid;
