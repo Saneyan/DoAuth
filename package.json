@@ -1,0 +1,27 @@
+{
+  "name": "DoAuth",
+  "description": "Automatic authorization system for University of Tsukuba Student Residence Hall Network System",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Saneyan/DoAuth",
+  "engines": { "node": ">= 0.6.15" },
+  "author": "Saneyuki Tadokoro <saneyan@mail.gfunction.com",
+  "help": {
+    "web": "https://github.com/Saneyan/DoAuth/blob/master/README.md"
+  },
+
+  "dependencies": {
+    "mocha": "1.13.0",
+    "forever": "0.10.9",
+    "underscore": "1.5.2"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Saneyan/DoAuth.git"
+  },
+
+  "licenses": {
+    "type":  "MIT",
+    "url": "http://opensource.org/licenses/MIT"
+  }
+}
