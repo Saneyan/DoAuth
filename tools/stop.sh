@@ -1,3 +1,4 @@
 #!/bin/sh
 
-forever stop --pidfile /tmp/doauth.pid 
+forever stop\
+        --pidFile /tmp/doauth.pid 
