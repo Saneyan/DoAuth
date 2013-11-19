@@ -6,7 +6,7 @@ var _ = require('underscore');
 var validOptions = {
   type:   ['wireless', 'dormitory'],
   debug:  ['true', 'false'],
-  auto:  ['true', 'false'],
+  auto:   ['true', 'false'],
   config: '*',
   repeat: '*',
   test_repeat: '*',
@@ -25,8 +25,9 @@ exports.parseObject = function (args) {
     if (isValid(arg)) {
       parsed[arg.key] = arg.value;
 
-      if (requirements.indexOf(arg.key) !== -1)
+      if (requirements.indexOf(arg.key) !== -1) {
         count++;
+      }
     } else {
       throw new InvalidArgumentException(arg.key);
     }

@@ -1,0 +1,78 @@
+#!/bin/sh
+
+dirname="`dirname ${0}`/../"
+
+function start() {
+  forever start\
+    --minUptime 10000\
+    --pidFile "/tmp/${1}_doauth.pid"\
+    --o "${dirname}/logs/${1}_stdout.log"\
+    --e "${dirname}/logs/${1}_error.log"\
+    $dirname/tools/authorize.js\
+      auto=true\
+      debug=false\
+      config=$dirname/configs/network.json\
+      type=$1\
+      test_repeat=5000\
+      repeat=3600000
+}
+
+function stop() {
+  forever stop\
+    --pidFile "/tmp/${1}_doauth.pid"\
+    $dirname/tools/authorize.js
+}
+
+function init() {
+  echo " * Initializing DoAuth..."
+
+  if [ ! -e $dirname/configs ]; then
+    mkdir $dirname/configs
+  fi
+
+  echo -n "Type your username: "
+  read name
+
+  echo -n "Type your password: "
+  read -s password
+
+  echo -e "\n * Creating configuration file..."
+
+  cat >$dirname/configs/network.json <<_EOL_
+{ "username": "${name}",
+  "password": "${password}",
+  "dormitory_url": "https://webauth04.cc.tsukuba.ac.jp:8443/cgi-bin/adeflogin.cgi",
+  "wireless_url": "https://wlan-auth1.cc.tsukuba.ac.jp/login.html" }
+_EOL_
+
+  chmod 600 $dirname/configs/network.json
+
+  echo "Created: $dirname/configs/network.json"
+  echo "Done!"
+}
+
+if [ "${1}" = "-d" -o "${1}" = "--start-dormitory" ]; then
+  start dormitory
+elif [ "${1}" = "-w" -o "${1}" = "--start-wireless" ]; then
+  start wireless
+elif [ "${1}" = "-D" -o "${1}" = "--stop-dormitory" ]; then
+  stop dormitory
+elif [ "${1}" = "-W" -o "${1}" = "--stop-wireless" ]; then
+  stop wireless
+elif [ "${1}" = "-i" -o "${1}" = "--init" ]; then
+  init
+else
+  cat << _EOL_
+DoAuth v0.1.0a (doauth-ut) by Saneyuki Tadokoro @ gfunction Computer Science Laboratory
+
+usage: doauth-ut [options]
+
+Options:
+  -d, --start-dormitory : Start authorizing network system of dormitory automatically
+  -w, --start-wireless  : Start authorizing wireless network automatically
+  -D, --stop-dormitory  : Stop authorizing network system of dormitory automatically
+  -W, --stop-wireless   : Stop authorizing wireless network automatically
+  -i, --init            : Create DoAuth configration file
+_EOL_
+fi
+

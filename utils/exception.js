@@ -16,7 +16,6 @@ LackOfArgumentException.__proto__ = Error.prototype;
 
 var AuthorizeException
   = exports.AuthorizeException
-  = function () {
-  };
+  = function () {};
 
 AuthorizeException.__proto__ = Error.prototype;
