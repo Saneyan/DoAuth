@@ -13,7 +13,7 @@ function start() {
       debug=false\
       config=$dirname/configs/network.json\
       type=$1\
-      test_repeat=5000\
+      test_repeat=100\
       repeat=3600000
 }
 
@@ -75,4 +75,3 @@ Options:
   -i, --init            : Create DoAuth configration file
 _EOL_
 fi
-
